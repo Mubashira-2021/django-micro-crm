@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Micro CRM</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+.sidebar-desktop{
+    min-height:100vh;
+    background:#212529;
+}
+
+.sidebar-desktop a{
+    color:white;
+    text-decoration:none;
+    display:block;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:6px;
+}
+
+.sidebar-desktop a:hover{
+    background:#343a40;
+}
+
+/* Active menu item */
+.sidebar-desktop a.active{
+    background:#495057;
+    font-weight:600;
+}
+</style>
+
+</head>
+<body>
+
+<!-- ✅ Mobile Navbar (shows on small screens) -->
+<nav class="navbar navbar-dark bg-dark d-md-none">
+<div class="container-fluid">
+    <span class="navbar-brand">Micro CRM</span>
+
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mobileMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+</nav>
+
+<!-- ✅ Mobile Slide Menu -->
+<div class="offcanvas offcanvas-start bg-dark text-white d-md-none"
+     tabindex="-1"
+     id="mobileMenu">
+
+<div class="offcanvas-header">
+<h5>Menu</h5>
+
+<button type="button"
+        class="btn-close btn-close-white"
+        data-bs-dismiss="offcanvas">
+</button>
+
+</div>
+
+<div class="offcanvas-body">
+
+<a href="/dashboard/"
+class="d-block text-white mb-3 {% if '/dashboard' in request.path %}fw-bold{% endif %}">
+Dashboard
+</a>
+
+<a href="/contacts/"
+class="d-block text-white mb-3 {% if '/contacts' in request.path %}fw-bold{% endif %}">
+Contacts
+</a>
+
+<a href="/deals/"
+class="d-block text-white mb-3 {% if '/deals' in request.path %}fw-bold{% endif %}">
+Deals
+</a>
+
+<a href="/logout/" class="btn btn-danger btn-sm">
+Logout
+</a>
+
+</div>
+</div>
+
+
+<div class="container-fluid">
+<div class="row">
+
+<!-- ✅ Desktop Sidebar only medium+ screens -->
+<div class="col-md-2 sidebar-desktop text-white p-3 d-none d-md-block">
+
+<h5>Menu</h5>
+
+<a href="/dashboard/"
+class="{% if '/dashboard' in request.path %}active{% endif %}">
+<i class="bi bi-speedometer2"></i> Dashboard
+</a>
+
+<a href="/contacts/"
+class="{% if '/contacts' in request.path %}active{% endif %}">
+<i class="bi bi-people"></i> Contacts
+</a>
+
+<a href="/deals/"
+class="{% if '/deals' in request.path %}active{% endif %}">
+<i class="bi bi-briefcase"></i> Deals
+</a>
+
+<div class="mt-4">
+<a href="/logout/" class="btn btn-outline-light btn-sm">
+Logout
+</a>
+</div>
+
+</div>
+
+<!-- ✅ Content full width on mobile -->
+<div class="col-12 col-md-10 p-3">
+{% block content %}{% endblock %}
+</div>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

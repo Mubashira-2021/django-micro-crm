@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Dashboard</h3>
+
+<div class="row">
+
+    <div class="col-12 col-sm-6 col-md-3 mb-3">
+        <div class="card p-3 shadow">
+            <h5>Contacts</h5>
+            <h3>{{ contacts }}</h3>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-3 mb-3">
+        <div class="card p-3 shadow">
+            <h5>Deals</h5>
+            <h3>{{ deals }}</h3>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-3 mb-3">
+        <div class="card p-3 shadow">
+            <h5>Hot Leads</h5>
+            <h3 class="text-danger">{{ hot }}</h3>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-3 mb-3">
+        <div class="card p-3 shadow">
+            <h5>Warm Leads</h5>
+            <h3 class="text-warning">{{ warm }}</h3>
+        </div>
+    </div>
+
+</div>
+
+<div class="mt-4 card p-3 shadow">
+    <h5>Analytics</h5>
+    <p>Cold Leads: {{ cold }}</p>
+    <p>Average Leads (NumPy): {{ avg }}</p>
+</div>
+
+<div class="row mt-4">
+
+    <!-- Chart 1 -->
+    <div class="col-12 col-md-6 mb-3">
+
+        <div class="card p-4 shadow h-100">
+
+            <h5>Lead Status Chart</h5>
+
+            <canvas id="leadChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- Chart 2 -->
+    <div class="col-12 col-md-6 mb-3">
+
+        <div class="card p-4 shadow h-100">
+
+            <h5>Deals by Customer Count</h5>
+
+            <canvas id="dealChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx = document.getElementById('leadChart');
+
+new Chart(ctx, {
+
+type: 'bar',
+
+data: {
+
+labels: ['Hot','Warm','Cold'],
+
+datasets: [{
+
+label: 'Customer Leads',
+
+data: [
+{{ hot }},
+{{ warm }},
+{{ cold }}
+],
+
+backgroundColor: [
+'rgba(220,53,69,0.7)',
+
+'rgba(255,193,7,0.7)',
+
+'rgba(108,117,125,0.7)'
+],
+
+borderColor: [
+'rgba(220,53,69,1)',
+
+'rgba(255,193,7,1)',
+
+'rgba(108,117,125,1)'
+],
+
+borderWidth: 1
+
+}]
+
+},
+
+options: {
+
+responsive: true,
+
+plugins: {
+legend: {
+display: true
+}
+},
+
+scales: {
+y: {
+beginAtZero: true
+}
+}
+
+}
+
+});
+
+</script>
+
+<script>
+
+const dealCtx = document.getElementById('dealChart');
+
+new Chart(dealCtx, {
+
+type: 'bar',
+
+data: {
+
+labels: [
+{% for n in deal_names %}
+'{{ n }}',
+{% endfor %}
+],
+
+datasets: [{
+
+label: 'Customers Per Deal',
+
+data: [
+{% for c in deal_counts %}
+{{ c }},
+{% endfor %}
+],
+
+backgroundColor: [
+'rgba(13,110,253,0.7)'
+],
+
+borderColor: [
+'rgba(13,110,253,1)'
+],
+
+borderWidth:1
+
+}]
+
+},
+
+options:{
+responsive:true,
+scales:{
+y:{
+beginAtZero:true
+}
+}
+}
+
+});
+
+</script>
+
+{% endblock %}

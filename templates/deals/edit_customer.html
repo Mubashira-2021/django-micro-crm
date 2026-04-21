@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow p-4 col-md-6">
+
+<h3>Edit Customer Lead</h3>
+
+<p><strong>{{ customer.contact.name }}</strong></p>
+
+<form method="post">
+{% csrf_token %}
+
+<select name="status" class="form-control mb-3">
+
+<option {% if customer.lead_status == 'Hot' %}selected{% endif %}>Hot</option>
+
+<option {% if customer.lead_status == 'Warm' %}selected{% endif %}>Warm</option>
+
+<option {% if customer.lead_status == 'Cold' %}selected{% endif %}>Cold</option>
+
+</select>
+
+<button class="btn btn-warning">
+Update
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

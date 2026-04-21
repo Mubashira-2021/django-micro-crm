@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Contacts</h3>
+
+<a href="/contacts/add/" class="btn btn-primary mb-3">Add Contact</a>
+
+<form method="get" class="mb-3">
+
+<div class="input-group">
+
+<input
+type="text"
+name="q"
+value="{{ request.GET.q }}"
+class="form-control"
+placeholder="Search contacts..."
+>
+
+<button class="btn btn-dark" title="Search">
+<i class="bi bi-search"></i>
+</button>
+
+<a href="/contacts/" class="btn btn-secondary" title="Clear">
+<i class="bi bi-x-circle"></i>
+</a>
+
+</div>
+
+</form>
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for c in contacts %}
+    <tr>
+        <td>{{ c.name }}</td>
+        <td>{{ c.email }}</td>
+        <td>
+            <a href="/contacts/edit/{{ c.id }}"
+            class="btn btn-sm btn-outline-primary"
+            title="Edit">
+            <i class="bi bi-pencil-square"></i>
+            </a>
+
+            <a href="/contacts/delete/{{ c.id }}"
+            class="btn btn-sm btn-outline-danger"
+            title="Delete">
+            <i class="bi bi-trash"></i>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}
