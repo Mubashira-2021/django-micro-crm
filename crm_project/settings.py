@@ -51,6 +51,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://django-micro-crm-1.onrender.com',
+]
+
 ROOT_URLCONF = 'crm_project.urls'
 
 TEMPLATES = [
