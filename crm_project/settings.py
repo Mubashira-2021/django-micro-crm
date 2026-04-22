@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-izl5irzc2lo1o-*3&(^&0x6bkvbv#ji&q*fj=b4xripm^qt41f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['django-micro-crm-1.onrender.com', 'localhost', '127.0.0.1']
+
+LOGIN_REDIRECT_URL = 'dashboard'  # Or whatever your dashboard URL name is
+LOGOUT_REDIRECT_URL = 'login'
 
 
 # Application definition
@@ -54,9 +57,6 @@ MIDDLEWARE = [
 CSRF_TRUSTED_ORIGINS = [
     'https://django-micro-crm-1.onrender.com',
 ]
-
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'crm_project.urls'
 
