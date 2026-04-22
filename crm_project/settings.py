@@ -55,6 +55,9 @@ CSRF_TRUSTED_ORIGINS = [
     'https://django-micro-crm-1.onrender.com',
 ]
 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 ROOT_URLCONF = 'crm_project.urls'
 
 TEMPLATES = [
