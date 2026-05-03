@@ -85,11 +85,13 @@ def logout_view(request):
 @login_required
 def contact_list(request):
 
+    view_type = request.GET.get('view', 'my')  # default = my
     query = request.GET.get('q')
 
-    contacts = Contact.objects.filter(
-        owner=request.user
-    )
+    if view_type == 'all':
+        contacts = Contact.objects.all()
+    else:
+        contacts = Contact.objects.filter(owner=request.user)
 
     if query:
         contacts = contacts.filter(
@@ -97,13 +99,10 @@ def contact_list(request):
             Q(email__icontains=query)
         )
 
-    return render(
-        request,
-        'contacts/list.html',
-        {
-            'contacts': contacts
-        }
-    )
+    return render(request, 'contacts/list.html', {
+        'contacts': contacts,
+        'view_type': view_type
+    })
 
 
 @login_required
@@ -137,6 +136,11 @@ def delete_contact(request, id):
     contact = Contact.objects.get(id=id)
     contact.delete()
     return redirect('contact_list')
+
+@login_required
+def contact_view(request, id):
+    contact = Contact.objects.get(id=id)
+    return render(request, 'contacts/view.html', {'contact': contact})
 
 @login_required
 def deal_list(request):

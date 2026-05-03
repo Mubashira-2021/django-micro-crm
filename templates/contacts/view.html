@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card p-4 shadow">
+
+<h4>{{ contact.name }}</h4>
+
+<p><strong>Email:</strong> {{ contact.email }}</p>
+<p><strong>Phone:</strong> {{ contact.phone }}</p>
+<p><strong>Owner:</strong> {{ contact.owner.username }}</p>
+
+<a href="/contacts/" class="btn btn-secondary mt-3">Back</a>
+
+</div>
+
+{% endblock %}
