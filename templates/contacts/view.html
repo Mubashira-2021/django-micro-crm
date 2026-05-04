@@ -2,16 +2,105 @@
 
 {% block content %}
 
-<div class="card p-4 shadow">
+<div class="row justify-content-center">
 
-<h4>{{ contact.name }}</h4>
+<div class="col-12 col-md-6">
 
-<p><strong>Email:</strong> {{ contact.email }}</p>
-<p><strong>Phone:</strong> {{ contact.phone }}</p>
-<p><strong>Owner:</strong> {{ contact.owner.username }}</p>
+<div class="card shadow border-0">
 
-<a href="/contacts/" class="btn btn-secondary mt-3">Back</a>
+<div class="card-body">
 
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+<h4 class="mb-0">
+<i class="bi bi-person-circle me-2"></i>
+{{ contact.name }}
+</h4>
+
+<span class="badge bg-secondary">
+Owned by {{ contact.owner.username }}
+</span>
+
+</div>
+
+<hr>
+
+<!-- Details -->
+<div class="mb-3">
+<label class="text-muted">Email</label>
+<div class="fw-semibold">
+{{ contact.email }}
+</div>
+</div>
+
+<div class="mb-3">
+<label class="text-muted">Phone</label>
+<div class="fw-semibold">
+{{ contact.phone }}
+</div>
+</div>
+
+<div class="mb-3">
+<label class="text-muted">Company</label>
+<div class="fw-semibold">
+{{ contact.company }}
+</div>
+</div>
+
+<div class="mb-3">
+<label class="text-muted">Job Title</label>
+<div class="fw-semibold">
+{{ contact.job_title }}
+</div>
+</div>
+
+<div class="mb-3">
+<label class="text-muted">Notes</label>
+<div class="fw-semibold">
+{{ contact.notes }}
+</div>
+</div>
+
+<!-- Actions -->
+<div class="d-flex justify-content-between mt-4">
+
+<a href="/contacts/?view={{ request.GET.view }}&q={{ request.GET.q }}"
+   class="btn btn-outline-dark">
+
+<i class="bi bi-arrow-left"></i> Back
+
+</a>
+
+{% if contact.owner == request.user %}
+
+<div>
+
+<!--<a href="/contacts/edit/{{ contact.id }}"
+   class="btn btn-outline-primary me-2">
+
+<i class="bi bi-pencil-square"></i>
+
+</a>
+
+<a href="/contacts/delete/{{ contact.id }}"
+   class="btn btn-outline-danger"
+   onclick="return confirm('Delete this contact?')">
+
+<i class="bi bi-trash"></i>
+
+</a>
+
+</div>-->
+
+{% endif %}
+
+</div>
+
+</div>
+</div>
+
+</div>
 </div>
 
 {% endblock %}

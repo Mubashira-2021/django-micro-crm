@@ -18,8 +18,31 @@
             <input name="email" type="email" class="form-control" placeholder="Enter email">
         </div>
 
+        <div class="mb-3">
+            <label>Phone</label>
+            <input name="phone" class="form-control mb-2" placeholder="Enter Phone">
+        </div>
+
+        <div class="mb-3">
+            <label>Company</label>
+            <input name="company" class="form-control mb-2" placeholder="Enter Company">
+        </div>
+
+        <div class="mb-3">
+            <label>Job Title</label>
+            <input name="job_title" class="form-control mb-2" placeholder="Enter Job Title">
+        </div>
+
+        <div class="mb-3">
+            <label>Notes</label>
+            <textarea name="notes" class="form-control mb-2" placeholder="Enter Notes"></textarea>
+        </div>
+
         <button class="btn btn-primary">Save Contact</button>
-        <a href="/contacts/" class="btn btn-secondary">Cancel</a>
+        <a href="/contacts/?view={{ view }}&q={{ q }}"
+        class="btn btn-secondary">
+        Cancel
+        </a>
 
     </form>
 </div>

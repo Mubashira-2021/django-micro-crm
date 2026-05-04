@@ -18,8 +18,31 @@
             <input name="email" value="{{ contact.email }}" class="form-control">
         </div>
 
+        <div class="mb-3">
+            <label>Phone</label>
+            <input name="phone" value="{{ contact.phone }}" class="form-control">
+        </div>
+
+		<div class="mb-3">
+            <label>Company</label>
+            <input name="company" value="{{ contact.company }}" class="form-control">
+        </div>
+
+		<div class="mb-3">
+            <label>Job Title</label>
+            <input name="job_title" value="{{ contact.job_title }}" class="form-control">
+        </div>
+
+		<div class="mb-3">
+            <label>Notes</label>
+			<textarea name="notes" class="form-control mb-2" placeholder="Notes">{{ contact.notes }}</textarea>
+        </div>
+
         <button class="btn btn-warning">Update</button>
-        <a href="/contacts/" class="btn btn-secondary">Cancel</a>
+        <a href="/contacts/?view={{ view }}&q={{ q }}"
+        class="btn btn-secondary">
+        Cancel
+        </a>
 
     </form>
 </div>

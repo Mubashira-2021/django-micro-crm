@@ -107,35 +107,64 @@ def contact_list(request):
 
 @login_required
 def add_contact(request):
+
+    view = request.GET.get('view', 'my')
+    q = request.GET.get('q', '')
+
     if request.method == 'POST':
         Contact.objects.create(
             name=request.POST['name'],
             email=request.POST['email'],
+            phone=request.POST['phone'],
+            company=request.POST['company'],
+            job_title=request.POST['job_title'],
+            notes=request.POST['notes'],
             owner=request.user
         )
-        return redirect('contact_list')
 
-    return render(request, 'contacts/add.html')
+        return redirect(f'/contacts/?view={view}&q={q}')
+
+    return render(request, 'contacts/add.html', {
+        'view': view,
+        'q': q
+    })
 
 
 @login_required
 def edit_contact(request, id):
     contact = Contact.objects.get(id=id)
 
+    view = request.GET.get('view', 'my')
+    q = request.GET.get('q', '')
+
     if request.method == 'POST':
         contact.name = request.POST['name']
         contact.email = request.POST['email']
+        contact.phone = request.POST['phone']
+        contact.company = request.POST['company']
+        contact.job_title = request.POST['job_title']
+        contact.notes = request.POST['notes']
         contact.save()
-        return redirect('contact_list')
 
-    return render(request, 'contacts/edit.html', {'contact': contact})
+        return redirect(f'/contacts/?view={view}&q={q}')
+
+    return render(request, 'contacts/edit.html', {
+        'contact': contact,
+        'view': view,
+        'q': q
+    })
 
 
 @login_required
 def delete_contact(request, id):
     contact = Contact.objects.get(id=id)
+
+    view = request.GET.get('view', 'my')
+    q = request.GET.get('q', '')
+
     contact.delete()
-    return redirect('contact_list')
+
+    return redirect(f'/contacts/?view={view}&q={q}')
 
 @login_required
 def contact_view(request, id):
@@ -166,6 +195,9 @@ def add_deal(request):
     if request.method == 'POST':
         Deal.objects.create(
             title=request.POST['title'],
+            description=request.POST['description'],
+            value=request.POST['value'],
+            expected_close_date=request.POST['expected_close_date'],
             owner=request.user
         )
         return redirect('deal_list')
@@ -198,6 +230,9 @@ def edit_deal(request, id):
 
     if request.method == 'POST':
         deal.title = request.POST['title']
+        deal.description = request.POST['description']
+        deal.value = request.POST['value']
+        deal.expected_close_date = request.POST['expected_close_date']
         deal.save()
         return redirect('deal_list')
 

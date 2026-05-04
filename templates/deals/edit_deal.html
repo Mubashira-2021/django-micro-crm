@@ -15,9 +15,28 @@ value="{{ deal.title }}"
 class="form-control mb-3"
 >
 
+<textarea name="description" class="form-control mb-3">{{ deal.description }}</textarea>
+
+<input
+name="value"
+value="{{ deal.value }}"
+class="form-control mb-3"
+>
+
+<input
+name="expected_close_date"
+value="{{ deal.expected_close_date|date:'Y-m-d' }}"
+class="form-control mb-3"
+type="date"
+>
+
 <button class="btn btn-warning">
 Update Deal
 </button>
+<a href="/deals/"
+class="btn btn-secondary">
+Cancel
+</a>
 
 </form>
 

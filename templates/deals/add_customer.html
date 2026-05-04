@@ -13,6 +13,7 @@
 <label>Contact</label>
 
 <select name="contact" class="form-control">
+<option value="">Select Contact</option>
 {% for c in contacts %}
 <option value="{{ c.id }}">
 {{ c.name }}
@@ -26,6 +27,7 @@
 <label>Lead Status</label>
 
 <select name="status" class="form-control">
+<option value="">Select Lead Status</option>
 <option>Hot</option>
 <option>Warm</option>
 <option>Cold</option>
@@ -36,6 +38,10 @@
 <button class="btn btn-success">
 Add Customer
 </button>
+<a href="/deals/"
+class="btn btn-secondary">
+Cancel
+</a>
 
 </form>
 
