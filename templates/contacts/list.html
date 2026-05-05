@@ -23,7 +23,7 @@ All Contacts
 
 <a href="/contacts/download-excel/?view={{ request.GET.view }}"
    class="btn btn-sm btn-outline-success ms-auto">
-   <i class="bi bi-file-earmark-excel"></i> Download Excel
+   <i class="bi bi-file-earmark-excel"></i> Download
 </a>
 
 </div>
@@ -101,7 +101,7 @@ autocomplete="off"
 
         <a href="/contacts/delete/{{ c.id }}?view={{ view_type }}&q={{ request.GET.q }}"
         class="btn btn-sm btn-outline-danger"
-        onclick="return confirm('Delete this contact?')">
+        onclick="confirmDelete(event, this.href, 'contact')">
         <i class="bi bi-trash"></i>
         </a>
 

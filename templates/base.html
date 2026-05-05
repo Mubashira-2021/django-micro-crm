@@ -38,6 +38,29 @@
 }
 </style>
 
+<style id="nav-style">
+.nav-link-custom {
+    color: white;
+    text-decoration: none;   /* ❌ remove underline */
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+.nav-link-custom:hover {
+    background-color: rgba(255,255,255,0.1);
+    text-decoration: none;
+}
+
+/* Active */
+.active-nav {
+    background-color: white;
+    color: black !important;
+    font-weight: 600;
+}
+</style>
+
 </head>
 <body>
 
@@ -73,23 +96,23 @@
 <div class="offcanvas-body">
 
 <a href="/dashboard/"
-class="d-block text-white mb-3 {% if '/dashboard' in request.path %}fw-bold{% endif %}">
-<i class="bi bi-speedometer2"></i> Dashboard
+class="nav-link-custom d-block mb-2 {% if '/dashboard' in request.path %}active-nav{% endif %}">
+<i class="bi bi-speedometer2 me-2"></i> Dashboard
 </a>
 
 <a href="/contacts/"
-class="d-block text-white mb-3 {% if '/contacts' in request.path %}fw-bold{% endif %}">
-<i class="bi bi-people"></i> Contacts
+class="nav-link-custom d-block mb-2 {% if '/contacts' in request.path %}active-nav{% endif %}">
+<i class="bi bi-people me-2"></i> Contacts
 </a>
 
 <a href="/deals/"
-class="d-block text-white mb-3 {% if request.GET.source != 'other' and '/deals' in request.path %}fw-bold{% endif %}">
-<i class="bi bi-briefcase"></i> My Deals
+class="nav-link-custom d-block mb-2 {% if request.GET.source != 'other' and '/deals' in request.path %}active-nav{% endif %}">
+<i class="bi bi-briefcase me-2"></i> My Deals
 </a>
 
 <a href="/others/"
-class="d-block text-white mb-3 {% if request.GET.source == 'other' or '/others' in request.path %}fw-bold{% endif %}">
-<i class="bi bi-briefcase"></i> Other Deals
+class="nav-link-custom d-block mb-2 {% if request.GET.source == 'other' or '/others' in request.path %}active-nav{% endif %}">
+<i class="bi bi-briefcase me-2"></i> Other Deals
 </a>
 
 <a href="/logout/" class="btn btn-danger btn-sm">
@@ -309,6 +332,43 @@ document.getElementById("contactForm").addEventListener("submit", function(e) {
     }
 });
 
+</script>
+
+<script id="sweet-delete">
+function confirmDelete(event, url, item) {
+    event.preventDefault();
+
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: 'Delete this ' + item + '?',
+        width: '300px',
+        padding: '1em',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#dc3545',   // red
+        cancelButtonColor: '#6c757d'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = url;
+        }
+    });
+}
+</script>
+
+<script>
+{% if messages %}
+    {% for message in messages %}
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "{{ message }}",
+            width: '300px',   // 👈 reduce size
+            padding: '1em'
+        });
+    {% endfor %}
+{% endif %}
 </script>
 
 </body>

@@ -486,12 +486,25 @@ def add_customer(request, deal_id):
     contacts = Contact.objects.filter(owner=request.user)
 
     if request.method == 'POST':
+        contact_id = request.POST.get('contact')
+        status = request.POST.get('status')
+
+        # ✅ Get single contact
+        contact = Contact.objects.get(id=contact_id)
+
+        # ✅ Check duplicate
+        if Customer.objects.filter(deal=deal, contact=contact).exists():
+            messages.error(request, "This contact already added in this deal")
+            return redirect(f'/deals/{deal.id}/customers/add/')
+
+        # ✅ Create if not exists
         Customer.objects.create(
-            contact_id=request.POST['contact'],
+            contact=contact,
             deal=deal,
-            lead_status=request.POST['status']
+            lead_status=status
         )
-        return redirect('deal_list')
+
+        return redirect(f'/deals/')
 
     return render(request, 'deals/add_customer.html', {
         'contacts': contacts,
