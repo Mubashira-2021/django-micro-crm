@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<h4 class="mb-3">Other Deals</h4>
+
+<div class="table-responsive">
+<table class="table table-bordered">
+
+<thead>
+<tr>
+    <th>Title</th>
+    <th class="d-none d-md-table-cell">Value</th>
+    <th class="d-none d-md-table-cell">Status</th>
+    <th class="d-none d-md-table-cell">Owner</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for d in deals %}
+
+<tr>
+    <td>{{ d.title }}</td>
+
+    <td class="d-none d-md-table-cell">₹ {{ d.value|floatformat:2|intcomma }}</td>
+
+    <td class="d-none d-md-table-cell">
+        <span class="badge
+        {% if d.status == 'Open' %}bg-warning
+        {% elif d.status == 'Won' %}bg-success
+        {% else %}bg-danger
+        {% endif %}">
+        {{ d.status }}
+        </span>
+    </td>
+
+    <td class="d-none d-md-table-cell">
+        {{ d.owner.username }}
+    </td>
+
+    <td>
+        <!-- View only -->
+        <a href="/deals/view/{{ d.id }}?source=other"
+           class="btn btn-sm btn-outline-secondary">
+           👁️
+        </a>
+    </td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="5" class="text-center text-muted">
+No other deals available
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+</div>
+
+{% endblock %}

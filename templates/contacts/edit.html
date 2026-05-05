@@ -5,22 +5,22 @@
 <div class="card shadow p-4 col-md-6">
     <h3 class="mb-4">Edit Contact</h3>
 
-    <form method="post">
+    <form method="POST" id="contactForm">
         {% csrf_token %}
 
         <div class="mb-3">
-            <label>Name</label>
-            <input name="name" value="{{ contact.name }}" class="form-control">
+            <label>Name<span class="mandatory">*</span></label>
+            <input name="name" id="contact_name" value="{{ contact.name }}" class="form-control">
         </div>
 
         <div class="mb-3">
-            <label>Email</label>
-            <input name="email" value="{{ contact.email }}" class="form-control">
+            <label>Email<span class="mandatory">*</span></label>
+            <input name="email" id="contact_email" value="{{ contact.email }}" class="form-control">
         </div>
 
         <div class="mb-3">
-            <label>Phone</label>
-            <input name="phone" value="{{ contact.phone }}" class="form-control">
+            <label>Phone<span class="mandatory">*</span></label>
+            <input name="phone" id="contact_phone" value="{{ contact.phone }}" class="form-control">
         </div>
 
 		<div class="mb-3">
@@ -33,12 +33,17 @@
             <input name="job_title" value="{{ contact.job_title }}" class="form-control">
         </div>
 
+        <div class="mb-3">
+            <label>City</label>
+            <input name="city" value="{{ contact.city }}" class="form-control">
+        </div>
+
 		<div class="mb-3">
             <label>Notes</label>
 			<textarea name="notes" class="form-control mb-2" placeholder="Notes">{{ contact.notes }}</textarea>
         </div>
 
-        <button class="btn btn-warning">Update</button>
+        <button type="submit" class="btn btn-warning">Update</button>
         <a href="/contacts/?view={{ view }}&q={{ q }}"
         class="btn btn-secondary">
         Cancel

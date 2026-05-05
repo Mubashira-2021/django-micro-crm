@@ -6,13 +6,13 @@
 
 <h3>Add Customer to {{ deal.title }}</h3>
 
-<form method="post">
+<form method="POST" id="customerForm">
 {% csrf_token %}
 
 <div class="mb-3">
 <label>Contact</label>
 
-<select name="contact" class="form-control">
+<select name="contact" class="form-control" id="contact_name">
 <option value="">Select Contact</option>
 {% for c in contacts %}
 <option value="{{ c.id }}">
@@ -26,7 +26,7 @@
 <div class="mb-3">
 <label>Lead Status</label>
 
-<select name="status" class="form-control">
+<select name="status" class="form-control" id="lead_status">
 <option value="">Select Lead Status</option>
 <option>Hot</option>
 <option>Warm</option>
@@ -35,7 +35,7 @@
 
 </div>
 
-<button class="btn btn-success">
+<button type="submit" class="btn btn-success">
 Add Customer
 </button>
 <a href="/deals/"

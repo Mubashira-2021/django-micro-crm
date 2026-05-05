@@ -12,10 +12,15 @@ urlpatterns = [
     path('contacts/add/', views.add_contact, name='add_contact'),
     path('contacts/edit/<int:id>/', views.edit_contact, name='edit_contact'),
     path('contacts/delete/<int:id>/', views.delete_contact, name='delete_contact'),
+    path('contacts/download/<int:id>/', views.download_contact_pdf, name='download_contact_pdf'),
+    path('contacts/download-excel/', views.download_contacts_excel, name='download_contacts_excel'),
 
     # Deals
     path('deals/', views.deal_list, name='deal_list'),
     path('deals/add/', views.add_deal, name='add_deal'),
+    path('deals/view/<int:id>/', views.deal_view, name='deal_view'),
+    path('others/', views.other_deals, name='other_deals'),
+    path('deals/download/<int:id>/', views.download_deal_pdf, name='download_deal_pdf'),
 
     # Customers inside deals
     path('deals/<int:deal_id>/customers/add/', views.add_customer, name='add_customer'),

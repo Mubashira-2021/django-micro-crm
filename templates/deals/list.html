@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h3>Deals</h3>
+<h3>My Deals</h3>
 
 <a href="/deals/add/" class="btn btn-primary mb-3">Add Deal</a>
 
@@ -13,8 +13,15 @@
     <div class="d-flex justify-content-between">
         <h5>{{ item.deal.title }}</h5>
         <div>
+            <a href="/deals/view/{{ item.deal.id }}?source=my&view={{ view_type }}&q={{ request.GET.q }}"
+            class="btn btn-sm btn-outline-secondary"
+            title="View">
+            <i class="bi bi-eye"></i>
+            </a>
+
             <a href="/deals/edit/{{ item.deal.id }}" class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-gear"></i></a>
-            <a href="/deals/delete/{{ item.deal.id }}" class="btn btn-sm btn-outline-danger me-1"><i class="bi bi-x-lg"></i></a>
+            <a href="/deals/delete/{{ item.deal.id }}" onclick="return confirm('Delete this deal?')" class="btn btn-sm btn-outline-danger me-1"><i class="bi bi-x-lg"></i></a>
+
         </div>
     </div>
 

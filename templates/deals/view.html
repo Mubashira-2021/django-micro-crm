@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="row">
+
+<!-- Deal Info -->
+<div class="col-12 col-md-6">
+
+<div class="card shadow border-0 mb-3">
+
+<div class="card-body">
+
+<h4 class="mb-3">
+<i class="bi bi-briefcase me-2"></i>
+{{ deal.title }}
+</h4>
+
+<span class="badge
+{% if deal.status == 'Open' %}bg-warning
+{% elif deal.status == 'Won' %}bg-success
+{% else %}bg-danger
+{% endif %}">
+{{ deal.status }}
+</span>
+
+<hr>
+
+<p><strong>Description:</strong><br>{{ deal.description }}</p>
+
+<p><strong>Value:</strong> ₹ {{ deal.value|floatformat:2|intcomma }}</p>
+
+<p><strong>Expected Close:</strong>
+{{ deal.expected_close_date|date:"d M Y" }}
+</p>
+
+</div>
+</div>
+</div>
+
+<!-- Customers -->
+<div class="col-12 col-md-6">
+
+<div class="card shadow border-0">
+
+<div class="card-body">
+
+<h5 class="mb-3">
+<i class="bi bi-people"></i> Customers
+</h5>
+
+{% for c in customers %}
+
+<div class="border rounded p-2 mb-2">
+
+<div class="d-flex justify-content-between">
+
+<div>
+<strong>{{ c.contact.name }}</strong><br>
+<small class="text-muted">{{ c.contact.email }}</small>
+</div>
+
+<span class="badge
+{% if c.lead_status == 'Hot' %}bg-danger
+{% elif c.lead_status == 'Warm' %}bg-warning
+{% else %}bg-secondary
+{% endif %}">
+{{ c.lead_status }}
+</span>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<p class="text-muted">No customers added</p>
+
+{% endfor %}
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="d-flex mt-4 col-lg-6">
+<!-- Back button -->
+<a href="{% if request.GET.source == 'other' %}/others/{% else %}/deals/{% endif %}?view={{ request.GET.view }}&q={{ request.GET.q }}"
+   class="btn btn-outline-dark">
+<i class="bi bi-arrow-left"></i> Back
+</a>
+
+<a href="/deals/download/{{ deal.id }}/"
+   class="btn btn-outline-dark ms-auto">
+   <i class="bi bi-download"></i> Download PDF
+</a>
+
+</div>
+
+{% endblock %}

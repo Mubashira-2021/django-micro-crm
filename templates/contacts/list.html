@@ -21,6 +21,11 @@ class="btn btn-sm {% if view_type == 'all' %}btn-dark{% else %}btn-outline-dark{
 All Contacts
 </a>
 
+<a href="/contacts/download-excel/?view={{ request.GET.view }}"
+   class="btn btn-sm btn-outline-success ms-auto">
+   <i class="bi bi-file-earmark-excel"></i> Download Excel
+</a>
+
 </div>
 
 <form method="get" class="mb-3">

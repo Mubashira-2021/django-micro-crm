@@ -6,31 +6,43 @@
 
 <h3>Edit Deal</h3>
 
-<form method="post">
+<form method="POST" id="dealForm">
 {% csrf_token %}
 
+<div class="mb-3">
+<label>Title<span class="mandatory">*</span></label>
 <input
 name="title"
 value="{{ deal.title }}"
-class="form-control mb-3"
+class="form-control" id="deal_title"
 >
+</div>
 
-<textarea name="description" class="form-control mb-3">{{ deal.description }}</textarea>
+<div class="mb-3">
+<label>Description<span class="mandatory">*</span></label>
+<textarea name="description" class="form-control" id="deal_desc">{{ deal.description }}</textarea>
+</div>
 
+<div class="mb-3">
+<label>Value<span class="mandatory">*</span></label>
 <input
 name="value"
 value="{{ deal.value }}"
-class="form-control mb-3"
+class="form-control" id="deal_value"
 >
+</div>
 
+<div class="mb-3">
+<label>Expected Close Date<span class="mandatory">*</span></label>
 <input
 name="expected_close_date"
 value="{{ deal.expected_close_date|date:'Y-m-d' }}"
-class="form-control mb-3"
-type="date"
+class="form-control"
+type="date" id="deal_close_dt"
 >
+</div>
 
-<button class="btn btn-warning">
+<button type="submit" class="btn btn-warning">
 Update Deal
 </button>
 <a href="/deals/"

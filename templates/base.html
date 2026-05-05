@@ -6,6 +6,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 .sidebar-desktop{
@@ -30,6 +31,10 @@
 .sidebar-desktop a.active{
     background:#495057;
     font-weight:600;
+}
+
+.mandatory {
+    color: #f00;
 }
 </style>
 
@@ -69,17 +74,22 @@
 
 <a href="/dashboard/"
 class="d-block text-white mb-3 {% if '/dashboard' in request.path %}fw-bold{% endif %}">
-Dashboard
+<i class="bi bi-speedometer2"></i> Dashboard
 </a>
 
 <a href="/contacts/"
 class="d-block text-white mb-3 {% if '/contacts' in request.path %}fw-bold{% endif %}">
-Contacts
+<i class="bi bi-people"></i> Contacts
 </a>
 
 <a href="/deals/"
-class="d-block text-white mb-3 {% if '/deals' in request.path %}fw-bold{% endif %}">
-Deals
+class="d-block text-white mb-3 {% if request.GET.source != 'other' and '/deals' in request.path %}fw-bold{% endif %}">
+<i class="bi bi-briefcase"></i> My Deals
+</a>
+
+<a href="/others/"
+class="d-block text-white mb-3 {% if request.GET.source == 'other' or '/others' in request.path %}fw-bold{% endif %}">
+<i class="bi bi-briefcase"></i> Other Deals
 </a>
 
 <a href="/logout/" class="btn btn-danger btn-sm">
@@ -109,8 +119,13 @@ class="{% if '/contacts' in request.path %}active{% endif %}">
 </a>
 
 <a href="/deals/"
-class="{% if '/deals' in request.path %}active{% endif %}">
-<i class="bi bi-briefcase"></i> Deals
+class="{% if request.GET.source != 'other' and '/deals' in request.path %}active{% endif %}">
+<i class="bi bi-briefcase"></i> My Deals
+</a>
+
+<a href="/others/"
+class="{% if request.GET.source == 'other' or '/others' in request.path %}active{% endif %}">
+<i class="bi bi-briefcase"></i> Other Deals
 </a>
 
 <div class="mt-4">
@@ -130,6 +145,171 @@ Logout
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+
+    let contact_name = document.getElementById("contact_name").value.trim();
+    let contact_email = document.getElementById("contact_email").value.trim();
+    let contact_phone = document.getElementById("contact_phone").value.trim();
+
+    if (!contact_name) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Mandatory',
+            text: 'Enter contact name',
+            width: '300px',   // 👈 reduce size
+            padding: '1em'
+        });
+        return;
+    }
+
+    if (!contact_email) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Mandatory',
+            text: 'Enter contact email',
+            width: '300px',   // 👈 reduce size
+            padding: '1em'
+        });
+        return;
+    }
+
+    if (!contact_phone) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Mandatory',
+            text: 'Enter contact phone',
+            width: '300px',   // 👈 reduce size
+            padding: '1em'
+        });
+        return;
+    }
+
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (!contact_email.match(emailPattern)) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Invalid Email',
+            text: 'Enter a valid email address',
+            width: '300px',   // 👈 reduce size
+            padding: '1em'
+        });
+        return;
+    }
+
+});
+</script>
+<script>
+
+    document.getElementById("dealForm").addEventListener("submit", function(e) {
+
+    let deal_title = document.getElementById("deal_title").value.trim();
+    let deal_desc = document.getElementById("deal_desc").value.trim();
+    let deal_value = document.getElementById("deal_value").value.trim();
+    let deal_close_dt = document.getElementById("deal_close_dt").value.trim();
+
+    if (!deal_title) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Mandatory',
+            text: 'Enter deal title',
+            width: '300px',   // 👈 reduce size
+            padding: '1em'
+        });
+        return;
+    }
+
+    if (!deal_desc) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Mandatory',
+            text: 'Enter deal description',
+            width: '300px',   // 👈 reduce size
+            padding: '1em'
+        });
+        return;
+    }
+
+    if (!deal_value) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Mandatory',
+            text: 'Enter deal value',
+            width: '300px',   // 👈 reduce size
+            padding: '1em'
+        });
+        return;
+    }
+
+    if (!deal_close_dt) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Mandatory',
+            text: 'Enter expected close date',
+            width: '300px',   // 👈 reduce size
+            padding: '1em'
+        });
+        return;
+    }
+
+    if (isNaN(deal_value) || Number(deal_value) <= 0) {
+    e.preventDefault();
+    Swal.fire({
+        icon: 'warning',
+        title: 'Invalid Amount',
+        text: 'Enter a valid value amount',
+        width: '300px',
+        padding: '1em'
+    });
+    return;
+}
+
+});
+
+</script>
+
+<script>
+
+    document.getElementById("customerForm").addEventListener("submit", function(e) {
+
+    let contact_name = document.getElementById("contact_name").value.trim();
+    let lead_status = document.getElementById("lead_status").value.trim();
+
+    if (!contact_name) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Mandatory',
+            text: 'Select contact',
+            width: '300px',   // 👈 reduce size
+            padding: '1em'
+        });
+        return;
+    }
+
+    if (!lead_status) {
+        e.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Mandatory',
+            text: 'Select lead status',
+            width: '300px',   // 👈 reduce size
+            padding: '1em'
+        });
+        return;
+    }
+});
+
+</script>
 
 </body>
 </html>

@@ -43,33 +43,69 @@ Owned by {{ contact.owner.username }}
 
 <div class="mb-3">
 <label class="text-muted">Company</label>
-<div class="fw-semibold">
-{{ contact.company }}
-</div>
+{% if contact.company %}
+        <div class="fw-semibold">
+            {{ contact.company }}
+        </div>
+    {% else %}
+        <div class="text-muted fst-italic">
+            No data specified
+        </div>
+    {% endif %}
 </div>
 
 <div class="mb-3">
 <label class="text-muted">Job Title</label>
-<div class="fw-semibold">
-{{ contact.job_title }}
+{% if contact.job_title %}
+        <div class="fw-semibold">
+            {{ contact.job_title }}
+        </div>
+    {% else %}
+        <div class="text-muted fst-italic">
+            No data specified
+        </div>
+    {% endif %}
 </div>
+
+<div class="mb-3">
+<label class="text-muted">City</label>
+{% if contact.city %}
+        <div class="fw-semibold">
+            {{ contact.city }}
+        </div>
+    {% else %}
+        <div class="text-muted fst-italic">
+            No data specified
+        </div>
+    {% endif %}
 </div>
 
 <div class="mb-3">
 <label class="text-muted">Notes</label>
-<div class="fw-semibold">
-{{ contact.notes }}
-</div>
+{% if contact.notes %}
+        <div class="fw-semibold">
+            {{ contact.notes }}
+        </div>
+    {% else %}
+        <div class="text-muted fst-italic">
+            No data specified
+        </div>
+    {% endif %}
 </div>
 
 <!-- Actions -->
-<div class="d-flex justify-content-between mt-4">
+<div class="d-flex mt-4">
 
 <a href="/contacts/?view={{ request.GET.view }}&q={{ request.GET.q }}"
    class="btn btn-outline-dark">
 
 <i class="bi bi-arrow-left"></i> Back
 
+</a>
+
+<a href="/contacts/download/{{ contact.id }}/"
+   class="btn btn-outline-dark ms-auto">
+   <i class="bi bi-download"></i> Download PDF
 </a>
 
 {% if contact.owner == request.user %}

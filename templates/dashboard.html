@@ -8,17 +8,17 @@
 
     <div class="col-12 col-sm-6 col-md-3 mb-3">
         <div class="card p-3 shadow">
-            <h5>Contacts</h5>
+            <h5>My Contacts</h5>
             <h3>{{ contacts }}</h3>
         </div>
     </div>
 
-    <div class="col-12 col-sm-6 col-md-3 mb-3">
+    <!--<div class="col-12 col-sm-6 col-md-3 mb-3">
         <div class="card p-3 shadow">
             <h5>Deals</h5>
             <h3>{{ deals }}</h3>
         </div>
-    </div>
+    </div>-->
 
     <div class="col-12 col-sm-6 col-md-3 mb-3">
         <div class="card p-3 shadow">
@@ -34,11 +34,18 @@
         </div>
     </div>
 
+    <div class="col-12 col-sm-6 col-md-3 mb-3">
+        <div class="card p-3 shadow">
+            <h5>Cold Leads</h5>
+            <h3 class="text-secondary">{{ cold }}</h3>
+        </div>
+    </div>
+
 </div>
 
 <div class="mt-4 card p-3 shadow">
     <h5>Analytics</h5>
-    <p>Cold Leads: {{ cold }}</p>
+    <p>My Deals: {{ deals }}</p>
     <p>Average Leads (NumPy): {{ avg }}</p>
 </div>
 
@@ -69,6 +76,26 @@
 
         </div>
 
+    </div>
+
+</div>
+
+<div class="row mt-4">
+
+    <!-- Pie Chart 1 -->
+    <div class="col-12 col-md-6 mb-3">
+        <div class="card p-4 shadow h-100">
+            <h5>My Contacts vs All Contacts</h5>
+            <canvas id="contactPie"></canvas>
+        </div>
+    </div>
+
+    <!-- Pie Chart 2 -->
+    <div class="col-12 col-md-6 mb-3">
+        <div class="card p-4 shadow h-100">
+            <h5>My Deals vs All Deals</h5>
+            <canvas id="dealPie"></canvas>
+        </div>
     </div>
 
 </div>
@@ -192,6 +219,48 @@ beginAtZero:true
 
 });
 
+</script>
+
+<script>
+const contactPieCtx = document.getElementById('contactPie');
+
+new Chart(contactPieCtx, {
+    type: 'pie',
+    data: {
+        labels: ['My Contacts', 'Other Contacts'],
+        datasets: [{
+            data: [
+                {{ my_contacts_count }},
+                {{ all_contacts_count }} - {{ my_contacts_count }}
+            ],
+            backgroundColor: [
+                'rgba(13,110,253,0.7)',
+                'rgba(200,200,200,0.5)'
+            ]
+        }]
+    }
+});
+</script>
+
+<script>
+const dealPieCtx = document.getElementById('dealPie');
+
+new Chart(dealPieCtx, {
+    type: 'pie',
+    data: {
+        labels: ['My Deals', 'Other Deals'],
+        datasets: [{
+            data: [
+                {{ my_deals_count }},
+                {{ all_deals_count }} - {{ my_deals_count }}
+            ],
+            backgroundColor: [
+                'rgba(25,135,84,0.7)',
+                'rgba(200,200,200,0.5)'
+            ]
+        }]
+    }
+});
 </script>
 
 {% endblock %}
